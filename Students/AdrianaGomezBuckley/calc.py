@@ -1,30 +1,29 @@
 class Calculator:
-    """
-    Takes a given value and performs various operations on it: 
-    addition, subtraction, multiplication, division; can be 
-    cleared back to zero.
+    """Takes a given value and performs various operations 
+    on it: addition, subtraction, multiplication, division; 
+    can be cleared back to zero.
     """
     def __init__(self, number=0):
-        """Return a new Calculator object"""
+        """Define a new Calculator object."""
         self.number = number
         
     def add(self, AddVal):
-        """Adds a value to the number."""
+        """Adds a value to the given number."""
         self.number = AddVal + self.number
         return self
     
     def sub(self, SubVal):
-        """Subtracts a value from the number."""
+        """Subtracts a value from the given number."""
         self.number = self.number - SubVal
         return self
     
     def mul(self, MulVal):
-        """Multiplies a value with the number."""
+        """Multiplies a value with the given number."""
         self.number = MulVal * self.number
         return self
     
     def div(self, DivVal):
-        """Divides the number by a value."""
+        """Divides the given number by a value."""
         self.number = self.number / DivVal
         return self
     
@@ -34,4 +33,5 @@ class Calculator:
         return self
     
     def result(self):
+        """Defines the result as the new given number to allow chaining."""
         return self.number
