@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import numpy as np
+import matplotlib.pyplot as plt
+from ipywidgets import interact, fixed
+
+def load_and_prepare_cmd(filename):
+    '''
+    This function prepares vairables for creating a cmd
+    Input: filename (string) file in which contains g and r magnitudes in the second and third columns and
+    Returns: arrays g and g-r for values of −0.5<g−r<2.5 and 14<g<24 
+    '''
+    g, r = np.loadtxt('A302_2019/homework/fieldA.csv', unpack=True, delimiter=',', usecols=(2,3), skiprows=1)  
+
+    g_mask = (g > 14) & (g < 24)
+    g = g[g_mask]
+    r = r[g_mask]
+
+    gr_mask = ((g-r) > -0.5) & ((g-r) < 2.5)
+    gr = (g-r)[gr_mask]
+    
+    g = g[gr_mask]
+        
+    return g, gr
+
+g, gr = load_and_prepare_cmd('fieldA.csv')
+
+def interactive_hess(g, gr, gridsize=100):
+    '''
+    This fuction creates an interactive Hess diagram given data in g and g-r
+    Input:	g - array of g magnitudes
+			r - array of r magnitudes 
+			gridsize - gridsize of hexbin plot
+	Output: Hess diagram with interactive gridsize adaptable using a slider, ranging from 50 to 300 in steps of 1
+    '''
+    fig = plt.hexbin(gr, g, gridsize=gridsize, bins='log')
+    plt.xlabel('g-r')
+    plt.ylabel('g');
+    return fig
+
+interact(interactive_hess, gr=fixed(gr), g=fixed(g), gridsize=(50,300,1))
